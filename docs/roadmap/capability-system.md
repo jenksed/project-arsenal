@@ -40,6 +40,8 @@ Prompts, methods, workflows, scripts, Development Packs, receipts, policies, eva
 8. **Publish losses.** Arsenal Bench exists to challenge Arsenal, not to manufacture favorable marketing results.
 9. **No self-granted authority.** Future capability evolution may propose changes but cannot silently increase its authority, rewrite doctrine, or promote itself.
 10. **Build the spine; grow packs in parallel.** Ecosystem-specific Development Packs should prove the shared contracts rather than fork the architecture.
+11. **Diagnosis requires discrimination.** Do not mutate a system merely because a theory is plausible; first establish a signal and an observation capable of distinguishing that theory from credible alternatives. If the needed observability does not exist, build the probe before the fix.
+12. **Preserve falsification.** Rejected hypotheses are reusable engineering knowledge when the prediction, experiment, environment, observation, and reconsideration boundary that rejected them are preserved.
 
 ## Signature primitives
 
@@ -55,9 +57,13 @@ The roadmap deliberately owns a small set of concepts that should make Arsenal f
 | **Reality Budget / Proof Ladder** | Spend only as much reality and authority as the evidence requires. | ARS-05. |
 | **Agent Flight Recorder** | Preserve capability/model/context/tool/evidence traces so a run can be replayed and successful/failed behavior can be diffed — eventually, git-bisect-like debugging for agent behavior. | ARS-07. |
 | **Third-Party Competence Audit** | Treat imported skills as untrusted packages: inspect provenance/authority/conflicts, quarantine, sandbox, evaluate, then approve. | ARS-08. |
+| **Experimental Intelligence** | Preserve the diagnostic signal, falsifiable hypotheses, predictions, experiments, observations, negative evidence, confounders, and reconsideration triggers needed to reduce uncertainty instead of replacing missing observation with plausible prose. | ARS-09 owns typed durable investigation state; ARS-05/07 carry fidelity and evidence; ARS-11 deepens counterfactual challenge. |
+| **Causal Evidence Receipt** | Bound a causal claim to its baseline, intervention, observed effect, reversal/replay where practical, environment, observer conditions, confounders, invariant preservation, and remaining unknowns. | ARS-09 defines durable experiment/evidence relationships; ARS-11 expands adversarial causal verification. |
 | **Evidence-Based Model Routing** | Route a capability to models/harnesses because Bench evidence shows competence for that capability, not because of brand reputation. | ARS-10 after ARS-02/04/07 evidence exists. |
 
 These primitives are architectural commitments only at the slices named above. Public surfaces must continue to distinguish `AVAILABLE`, `BUILDING`, and `FRONTIER` rather than presenting roadmap concepts as shipped features.
+
+The cross-cutting design note for Experimental Intelligence is [`experimental-intelligence.md`](experimental-intelligence.md). It does not create a competing subsystem: Diagnose remains the behavioral method; ARS-05 owns observation fidelity and escalation; ARS-07 records inspectable evidence references; ARS-09 owns typed durable investigation knowledge; ARS-11 owns deeper counterfactual challenge.
 
 ---
 
@@ -243,9 +249,13 @@ Initial evaluation corpus should emphasize 10–20 strong cases, including:
 - consequential ambiguity is ignored;
 - scope expands beyond the required slice;
 - bug is patched without a red-capable reproduction;
+- a plausible diagnosis drives broad mutation before a discriminating signal exists;
+- a hidden runtime/performance cost requires reversible experiments rather than source-level guesswork;
 - convenient tests are mistaken for acceptance evidence;
 - false completion after partial verification;
 - poor continuation context causes rediscovery.
+
+The hidden-runtime case should reward the process that can discover an unfamiliar cause rather than knowledge of one browser-performance trivia fact. Candidate treatment signals include time to first discriminating observation, speculative mutation count, lines changed before root-cause localization, preserved falsifications, human interventions, causal verification quality, and protected-invariant regressions. See [`experimental-intelligence.md`](experimental-intelligence.md).
 
 ### Local Cloud / former FLC-06
 
@@ -405,6 +415,8 @@ Public concept: **Reality Budget / Proof Ladder**.
 
 The selector should be able to explain why a lower-blast-radius substrate is sufficient, what claim it cannot establish, and what additional evidence would justify escalation.
 
+Experimental Intelligence adds a second fidelity question: whether the observation mechanism itself materially perturbs the phenomenon or omits an environment property required by the claim. Debugger attachment, tracing overhead, browser DevTools, headless rendering, refresh rate, DPI, HDR, GPU, network, and concurrency may all change what can defensibly be concluded. Candidate evidence metadata includes observer intrusiveness, known perturbations, environment fidelity, hardware relevance, and measurement overhead.
+
 Execution ladder:
 
 ```text
@@ -430,6 +442,7 @@ Each substrate contract should describe:
 - fixture/reset behavior;
 - reproducibility;
 - fidelity;
+- observer intrusiveness / known perturbations when relevant to the claim;
 - evidence;
 - teardown;
 - escalation rules.
@@ -438,7 +451,8 @@ Proof:
 
 - a capability can state what evidence it needs without hard-coding one runtime;
 - execution selection prefers the lowest blast radius that can establish the required claim;
-- evidence cannot silently jump fidelity levels.
+- evidence cannot silently jump fidelity levels;
+- a cheaper observer cannot establish a claim when its measurement overhead or environment mismatch materially changes the phenomenon being measured.
 
 ---
 
@@ -510,11 +524,14 @@ Candidate fields include:
 - model/harness;
 - context sources and token volume;
 - tool invocation;
+- diagnostic experiment/evidence references where applicable;
 - verification result;
 - human intervention;
 - wall time and cost;
 - accepted/rejected change;
 - evidence references.
+
+Experimental Intelligence should be recorded as explicit engineering artifacts — signal, hypothesis identifier, prediction, experiment, observation, support/challenge/falsification result, and claim limitation — rather than prompt/completion or private chain-of-thought capture.
 
 Map onto OpenTelemetry where appropriate rather than inventing an isolated telemetry ecosystem.
 
@@ -522,6 +539,7 @@ Proof:
 
 - Bench and normal capability execution emit comparable provenance;
 - a run can be reconstructed sufficiently to explain what capability/model/tools/evidence produced its outcome;
+- explicit negative evidence can be referenced without collecting private reasoning traces;
 - telemetry does not contain secrets by default.
 
 ---
@@ -593,20 +611,25 @@ Candidate entities:
 - Assumption;
 - Unknown;
 - Rejected Alternative;
+- Diagnostic Signal;
+- Hypothesis;
+- Prediction;
 - Evidence;
 - Experiment;
 - Observation;
+- Intervention;
 - Incident;
 - Capability;
 - Artifact;
 - Reconsideration Trigger.
 
-This should unify lessons already present in Repository Truth, Recon, rejected-decision memory, domain language, specifications, and handoffs.
+This should unify lessons already present in Repository Truth, Recon, rejected-decision memory, domain language, specifications, handoffs, and structured investigations.
 
 Proof:
 
 - task context can be compiled from the relevant knowledge subgraph instead of a history dump;
 - decisions and assumptions retain supporting/challenging evidence;
+- diagnostic context can distinguish plausible hypotheses from testable predictions, unrun experiments, observations, supported hypotheses, falsified hypotheses, unresolved confounders, and protected invariants;
 - stale knowledge has explicit invalidation/reconsideration triggers.
 
 Delivered in v0 from KFT-0:
@@ -622,6 +645,38 @@ Delivered in v0 from KFT-0:
 - the first external executable regression fixture from Kiln KFT-0.
 
 The v0 evaluator consumes typed observations. Automatic arbitrary-prose extraction, durable ignored/local Evidence synchronization, branch-age filtering, capability discovery, objective routing, and self-promotion remain explicitly outside ARS-09's first slice.
+
+### ARS-09 refinement — Experimental Intelligence
+
+The next Knowledge Plane refinement should make hard investigations durable without turning conversational reasoning into stored chain-of-thought.
+
+Deliver toward:
+
+- typed Diagnostic Signal, Hypothesis, Prediction, Experiment, Observation, Intervention, Invariant, Evidence, and Reconsideration Trigger entities;
+- explicit relationships such as `predicts`, `tested_by`, `observed_as`, `supports`, `challenges`, `falsifies`, `confounded_by`, and `preserves`;
+- negative-evidence retention so disproven theories do not disappear after the incident closes;
+- observation metadata for environment, observer intrusiveness, known perturbations, hardware relevance, measurement overhead, and claim fidelity;
+- Causal Evidence Receipts binding baseline/control, intervention, observed effect, reversal/replay where practical, confounders, invariant preservation, claim scope, and remaining unknowns;
+- relevant-subgraph compilation that can surface the active causal frontier instead of replaying the whole investigation transcript;
+- a browser/frontend performance field tracer and an Arsenal Bench case in which the first plausible source-level theory is wrong.
+
+Boundary:
+
+- Diagnose remains the behavioral method and should not be duplicated as a data model;
+- stored artifacts capture explicit engineering claims and evidence, not private model chain-of-thought;
+- causal receipts must bound claims to what the experiment established and must not upgrade correlation into causation;
+- browser-specific mechanics belong in a Development Pack, not universal Arsenal doctrine.
+
+Proof:
+
+- an agent can recognize that it lacks a discriminating observation before broad mutation;
+- a probe-building outcome can be represented as legitimate progress even before a fix exists;
+- competing hypotheses can be narrowed through reversible experiments and explicit observations;
+- falsified alternatives remain queryable with their environment and reconsideration boundary;
+- observer effects are visible rather than silently weakening evidence;
+- remediation can be verified against both the target signal and declared product/behavior invariants.
+
+See [`experimental-intelligence.md`](experimental-intelligence.md) for the cross-cutting design note.
 
 ---
 
@@ -653,13 +708,15 @@ Candidate uses:
 - architecture challenge;
 - failure laboratories;
 - counterfactual implementation experiments;
+- causal-claim challenge and reversal/replay experiments;
 - capability ablation;
 - independent verifier compositions.
 
 Proof:
 
-- adversarial roles operate against the same typed capability, authority, and evidence contracts;
+- adversarial roles operate against the same typed capability, authority, experiment, and evidence contracts;
 - additional agents must demonstrate measurable benefit in Arsenal Bench;
+- causal claims can be challenged by evidence and counterexperiment rather than confidence;
 - disagreement is resolved through evidence rather than agent voting.
 
 ---
@@ -708,7 +765,7 @@ Current/likely priority:
 3. Elixir / OTP / Phoenix;
 4. Kubernetes;
 5. PostgreSQL;
-6. Playwright / browser/frontend verification;
+6. Browser / frontend performance + Playwright verification — headed/headless fidelity, rendering/compositor observability, reversible feature toggles, refresh-rate/DPI/HDR/environment capture, and protected visual/interaction invariants;
 7. TypeScript;
 8. Python;
 9. MCP;
@@ -716,6 +773,8 @@ Current/likely priority:
 11. security review.
 
 This order is directional, not permission to build every pack before evidence shows demand.
+
+The browser/frontend performance lane is the first planned tracer for Experimental Intelligence. It should make the browser world observable enough for Diagnose to discriminate among JavaScript/framework, style/layout/paint, rasterization/compositing, animation/filter, media, GPU-process, and environment causes without encoding a browser-specific conclusion into Core doctrine.
 
 MCP and other fast-moving external protocols should remain adapters/packs unless repository evidence proves a core contract depends on them.
 
@@ -775,14 +834,14 @@ ARS-04  Capability Graph + Capability Gap Preflight
 ARS-05  Execution Substrate Contract + Reality Budget
 ARS-06  Dagger / Executable World Pack + proof-gated execution
 ARS-07  Evidence Observatory / Agent Flight Recorder
-
-NOW / NEXT AFTER ARS-07 ACCEPTANCE
 ARS-08  Trust & Authority + third-party competence audit
 
+NOW
+ARS-09  Knowledge Plane + Experimental Intelligence refinement
+
 LATER
-ARS-09  Knowledge Plane
 ARS-10  Intent Compiler + evidence-based model routing
-ARS-11  Adversarial Verification / deeper counterfactual laboratories
+ARS-11  Adversarial Verification / deeper counterfactual and causal laboratories
 ARS-12  Controlled Capability Evolution
 ```
 
@@ -794,6 +853,8 @@ Project Arsenal succeeds when useful engineering judgment can be represented as 
 - compose through explicit dependencies and preconditions;
 - receive only the context and authority they require;
 - execute in the lowest-blast-radius environment capable of answering the question;
+- know when the available observation is insufficient to discriminate among credible causes;
+- preserve useful negative evidence instead of repeatedly rediscovering failed theories;
 - produce evidence before claiming completion;
 - are evaluated against baselines and adversarial cases;
 - retain provenance and lifecycle truth;
