@@ -395,3 +395,32 @@ These items do not establish a competing frontier. They feed into
 existing ARS-NN slices or, where they are new, defer to the first
 post-#24 program slice that adopts them. The classification above
 gives that slice a starting order.
+
+## Status update (post-GC01 surgical repair + Project Intelligence redirection)
+
+The GC01 surgical repair on the current branch head restores
+closed-shape enforcement on the source-model loader and corrects
+the schema's `path` / `path_pattern` XOR. The source-model
+remainder of Track A item 2 is therefore fully implemented for the
+30 artifacts and 43 facts it currently classifies.
+
+A separate architecture-reconciliation slice has recorded a
+proposed Project Intelligence experiment under
+`docs/roadmap/project-intelligence.md`. The redirection is
+documentation only:
+
+* Track A items remain in their current order; the redirection
+  classifies them as KEEP / MOVE EARLIER / MOVE LATER / REFRAME
+  / EXPERIMENT rather than reordering them.
+* The experimental sequence PI-00 / PI-01 / PI-02 sits outside
+  the Track A / Track B classification and explicitly does not
+  preempt any Track A or Track B item.
+* GC02 and later Governance Compression must, per the
+  architecture note, ask whether a candidate artifact is genuine
+  canonical information or a derivable projection; if the latter,
+  prefer a generated projection over a new manually synchronized
+  surface.
+
+The redirection does not implement the experiment. The experiment
+remains hypothetical until PI-02 passes the architecture shootout
+specified at `docs/architecture/architecture-shootout.md`.

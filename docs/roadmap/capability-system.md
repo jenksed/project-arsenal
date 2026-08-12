@@ -721,6 +721,40 @@ MCP and other fast-moving external protocols should remain adapters/packs unless
 
 ---
 
+# Project Intelligence experimental lane (provisional)
+
+This lane does not establish a competing frontier. It exists to
+investigate whether Project Arsenal should grow a shared
+deterministic Project Intelligence substrate that extracts
+source-bound observations from canonical artifacts, indexes them
+rebuildably, and serves authority-aware queries to existing
+subsystems.
+
+Until PI-02 passes the architecture shootout, every package in this
+lane is **experimental**:
+
+* **PI-00 — minimal IR tracer.** Deterministic extraction of
+  approximately 8–12 representative facts already registered
+  through GC01. No consumer. No SQLite. No schema commitment.
+* **PI-01 — disposable project intelligence index.** Rebuildable
+  local index of PI-00 observations. SQLite only if evidence shows
+  it helps; otherwise plain JSON cache. Gitignored. Deletable.
+* **PI-02 — architecture shootout.** Six tracer scenarios against
+  the existing specialized subsystems. PASS or kill.
+
+See `docs/architecture/project-intelligence.md` for the hypothesis
+and `docs/architecture/architecture-shootout.md` for the
+experiment.
+
+The Project Intelligence lane does not preempt any Track A or
+Track B item from `docs/roadmap/post-pr-24-deferred-architecture.md`,
+nor does it preempt ARS-09, ARS-10, ARS-11, ARS-12, or ARS-13.
+Those slices remain authoritative for their respective concerns;
+the experiment, if it passes, will *consume* their canonical
+artifacts rather than replace them.
+
+---
+
 # Relationship to the Floci program
 
 FLC-00 through FLC-05 remain valuable delivered tracer slices.
