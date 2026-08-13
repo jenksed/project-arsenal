@@ -2,7 +2,7 @@
 
 The selected research method is now implemented beneath Loadout's unchanged
 `repository-recon` Capability at exact commit
-`ae81b0a21134c01e6f28bafc27e53a9e02191244`.
+`65761781968596f62327d1c6a7ab582d699f5216` on canonical `main`.
 
 The evaluation invoked that real Loadout build through the external
 `loadout-runtime` adapter. Arsenal imported no Loadout source. The four target
