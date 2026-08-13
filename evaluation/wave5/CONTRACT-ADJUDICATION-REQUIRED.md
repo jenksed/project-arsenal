@@ -37,8 +37,8 @@ binding says what the qualification applies to.
 ## Current truthful state
 
 - Winner: selected and holdout-validated.
-- Winner QMR status: not emitted; QMR v0 cannot bind the observed reality.
-- Existing QMR: remains experimental and unchanged.
+- Winner QMR status: Loadout records experimental adoption only; QMR v0 cannot bind the full observed reality and no qualification is claimed.
+- Existing fixture QMR: replaced in Loadout by the experimental adoption record.
 - Capability adoption: may consume the evaluated method as boundary data
   because Loadout accepts experimental methods, but must not call it qualified.
 - Contract change: proposed for owner adjudication only; not implemented in

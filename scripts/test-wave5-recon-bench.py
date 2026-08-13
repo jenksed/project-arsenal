@@ -102,6 +102,10 @@ def test_stored_benchmark_result_digests_are_valid() -> None:
             artifact = copy.deepcopy(artifact)
             artifact["metrics"].pop("execution_cost_ms", None)
             assert bench.digest(artifact) == expected_digest, path
+        elif artifact["schema"] == "arsenal/repository-recon-productized-result/v1":
+            artifact = copy.deepcopy(artifact)
+            artifact["real_corpus"]["metrics"].pop("execution_cost_ms", None)
+            assert bench.digest(artifact) == expected_digest, path
         else:
             import hashlib
 
@@ -135,6 +139,20 @@ def test_selection_and_holdout_gates_remain_true() -> None:
     assert holdout_winner["metrics"]["supported_assertions"] == 15
     assert holdout_winner["metrics"]["false_certainty"] == 0
     assert holdout_winner["metrics"]["correct_unknowns"] == 1
+
+
+def test_productized_loadout_matches_the_selected_method() -> None:
+    lock = json.loads((WAVE5 / "productized-lock.v1.json").read_text(encoding="utf-8"))
+    result = json.loads((WAVE5 / "results" / "productized.json").read_text(encoding="utf-8"))
+    assert result["binding"] == lock
+    assert lock["capability_id"] == "repository-recon"
+    assert lock["status"] == "experimental"
+    assert result["original_16"]["supported"] == 16
+    assert result["original_16"]["unsupported_factual_claims"] == 0
+    assert result["real_corpus"]["metrics"]["supported_assertions"] == 60
+    assert result["real_corpus"]["metrics"]["assertions_total"] == 60
+    assert result["real_corpus"]["metrics"]["false_certainty"] == 0
+    assert result["real_corpus"]["metrics"]["deterministic"] is True
 
 
 def main() -> None:
